@@ -18,12 +18,12 @@ def timing(f):
 
 
 def save_dictionary(dictionary):
-    with open("dictionary.txt", "w") as d:
+    with open("article2/dictionary.txt", "w") as d:
         json.dump(dictionary, d)
 
 
 def load_dictionary():
-    with open("dictionary.txt", "r") as d:
+    with open("article2/dictionary.txt", "r") as d:
         dictionary = json.load(d)
     return dictionary
 
