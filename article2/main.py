@@ -79,7 +79,7 @@ def main():
 
     while True:
         curr_word = input("Starting letters: ")
-        if curr_word not in dictionary:
+        if not search(dictionary, curr_word):
             print("No word can be formed\n")
             continue
 

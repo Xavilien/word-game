@@ -21,7 +21,7 @@ def value(curr_word, player, players_turn):
 def main():
     while True:
         curr_word = input("Starting letters: ")
-        if curr_word not in dictionary:
+        if not search(curr_word):
             print("No word can be formed\n")
             continue
 
