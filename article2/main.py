@@ -43,8 +43,6 @@ def value(dictionary, scores, curr_word, player, players_turn):
 
 def main():
     dictionary = get_dictionary()
-    # player = int(input("Player 1 or 2: "))
-    # scores = get_scores(dictionary, player)
 
     curr_word = input("Starting letters: ")
     if not search(dictionary, curr_word):  # Ensure that the letters typed in can be used to form a word
