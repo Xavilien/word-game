@@ -21,19 +21,19 @@ def value(curr_word, player, players_turn):
 def main():
     while True:
         curr_word = input("Starting letters: ")
-        if not search(curr_word):
+        if not search(curr_word):  # Ensure that the letters typed in can be used to form a word
             print("No word can be formed\n")
             continue
 
-        player = (len(curr_word)+1) % 2
+        player = (len(curr_word)+1) % 2  # Assume that the player who plays the next letter wants to win
 
         possible_letters, possible_words = get_possible(curr_word)
 
-        if not possible_letters:
-            print("You win!\n") if get_score(player, curr_word) == 1 else print("You lose:(\n")
+        if not possible_letters:  # If curr_word is already an actual word
+            print(curr_word, "is already a word!\n")
             continue
 
-        if len(possible_words) == 1:
+        if len(possible_words) == 1:  # If only one possible word can be formed with curr_word
             word = curr_word + possible_words[0]
             print("The only possible word is", word)
             print("You win!\n") if get_score(player, word) == 1 else print("You lose:(\n")
@@ -42,9 +42,9 @@ def main():
         scores = [value(curr_word + letter, player, 0) for letter in possible_letters]
         best_letters = [possible_letters[i] for i in range(len(scores)) if scores[i] == 1]
 
-        if not best_letters:
+        if not best_letters:  # If there is no possible way to win, just show all possible letters
             print("There are no winning letters")
-            print("Possible letters: ", ", ".join(possible_letters))
+            print("Possible letters: ", ", ".join(possible_letters), "\n")
             continue
 
         print("Best letters to pick are:", ", ".join(best_letters), "\n")

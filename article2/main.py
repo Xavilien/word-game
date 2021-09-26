@@ -41,35 +41,29 @@ def value(dictionary, scores, curr_word, player, players_turn):
     return v
 
 
-# Tell you whether you win given a word
-def show_winner(scores, word):
-    print("You win!") if scores[word] == 1 else print("You lose:(")
-
-
 @timing
 def get_next_letter(dictionary, scores, player, curr_word):
     possible_letters, possible_words = get_possible(dictionary, curr_word)
 
-    if not possible_letters:
-        return show_winner(scores, curr_word)
+    if not possible_letters:  # If curr_word is already an actual word
+        print(curr_word, "is already a word!\n")
+        return
 
-    if len(possible_words) == 1:
+    if len(possible_words) == 1:  # If only one possible word can be formed with curr_word
         word = curr_word + possible_words[0]
         print("The only possible word is", word, '\n')
-        return show_winner(scores, word)
+        print("You win!") if scores[word] == 1 else print("You lose:(")
+        return
 
     scores = [value(dictionary, scores, curr_word + letter, player, 0) for letter in possible_letters]
-    best_indices = [i for i in range(len(scores)) if scores[i] == 1]
-    best_letters = [possible_letters[i] for i in best_indices]
+    best_letters = [possible_letters[i] for i in range(len(scores)) if scores[i] == 1]
 
-    if not best_letters:
+    if not best_letters:  # If there is no possible way to win, just show all possible letters
         print("There are no winning letters")
         print("Possible letters: ", ", ".join(possible_letters))
-        return possible_letters
+        return
 
     print("Best letters to pick are:", ", ".join(best_letters))
-
-    return best_letters
 
 
 def main():
@@ -79,11 +73,11 @@ def main():
 
     while True:
         curr_word = input("Starting letters: ")
-        if not search(dictionary, curr_word):
+        if not search(dictionary, curr_word):  # Ensure that the letters typed in can be used to form a word
             print("No word can be formed\n")
             continue
 
-        player = (len(curr_word)+1) % 2
+        player = (len(curr_word)+1) % 2  # Assume that the player who plays the next letter wants to win
         scores = get_scores(dictionary, player)
         get_next_letter(dictionary, scores, player, curr_word)
 
