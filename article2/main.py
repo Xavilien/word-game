@@ -41,6 +41,7 @@ def value(dictionary, scores, curr_word, player, players_turn):
     return v
 
 
+@timing
 def main():
     dictionary = get_dictionary()
 

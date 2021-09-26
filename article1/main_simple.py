@@ -18,6 +18,7 @@ def value(curr_word, player, players_turn):
     return v
 
 
+@timing
 def main():
     curr_word = input("Starting letters: ")
     if not search(curr_word):  # Ensure that the letters typed in can be used to form a word

@@ -1,4 +1,18 @@
 from preprocessing_simple import *
+from functools import wraps
+from time import time
+
+
+# Decorator to determine how long a function takes to run
+def timing(f):
+    @wraps(f)
+    def wrap(*args, **kw):
+        ts = time()
+        result = f(*args, **kw)
+        te = time()
+        print(f'{f.__name__} took {(te-ts):.3f}s to run\n')
+        return result
+    return wrap
 
 
 # Returns all words that start with the particular subword
