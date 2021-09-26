@@ -2,7 +2,7 @@ from preprocessing import *
 
 
 # Return score of all words given the player, 0 if player has to play the last letter and 1 if otherwise
-def get_scores(player):
+def get_scores(dictionary, player):
     scores = {}
     for word in dictionary:
         parity = len(word) % 2
