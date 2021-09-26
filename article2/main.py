@@ -41,8 +41,19 @@ def value(dictionary, scores, curr_word, player, players_turn):
     return v
 
 
-@timing
-def get_next_letter(dictionary, scores, player, curr_word):
+def main():
+    dictionary = get_dictionary()
+    # player = int(input("Player 1 or 2: "))
+    # scores = get_scores(dictionary, player)
+
+    curr_word = input("Starting letters: ")
+    if not search(dictionary, curr_word):  # Ensure that the letters typed in can be used to form a word
+        print("No word can be formed\n")
+        return
+
+    player = (len(curr_word)+1) % 2  # Assume that the player who plays the next letter wants to win
+    scores = get_scores(dictionary, player)
+
     possible_letters, possible_words = get_possible(dictionary, curr_word)
 
     if not possible_letters:  # If curr_word is already an actual word
@@ -66,21 +77,6 @@ def get_next_letter(dictionary, scores, player, curr_word):
     print("Best letters to pick are:", ", ".join(best_letters))
 
 
-def main():
-    dictionary = get_dictionary()
-    # player = int(input("Player 1 or 2: "))
-    # scores = get_scores(dictionary, player)
-
-    while True:
-        curr_word = input("Starting letters: ")
-        if not search(dictionary, curr_word):  # Ensure that the letters typed in can be used to form a word
-            print("No word can be formed\n")
-            continue
-
-        player = (len(curr_word)+1) % 2  # Assume that the player who plays the next letter wants to win
-        scores = get_scores(dictionary, player)
-        get_next_letter(dictionary, scores, player, curr_word)
-
-
 if __name__ == '__main__':
-    main()
+    while True:
+        main()
