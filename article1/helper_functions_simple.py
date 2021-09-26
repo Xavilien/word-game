@@ -19,5 +19,12 @@ def get_possible(curr_word):
 
     return sorted(list(set(possible_letters))), possible_words
 
+
+def get_score(player, word):
+    parity = len(word) % 2
+    score = parity & (player % 2)
+    return score
+
+
 # print(search(dictionary, "epidemi"))
 # print(search_remaining_letters(dictionary, "epidemi"))
