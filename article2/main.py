@@ -21,13 +21,10 @@ def get_possible(dictionary, curr_word):
 
 def value(dictionary, scores, curr_word, player, players_turn):
     # Check if gamestate is terminal
-    possible_words = search(dictionary, curr_word)
-
-    if len(possible_words) == 1 or len(set([scores[word] for word in possible_words])) == 1:
-        return scores[possible_words[0]]
-
-    # Get next possible letters
     next_possible_letters, possible_words = get_possible(dictionary, curr_word)
+
+    if len(possible_words) == 1 or len(set([scores[curr_word + word] for word in possible_words])) == 1:
+        return scores[curr_word + possible_words[0]]
 
     if players_turn:
         v = -float("inf")
