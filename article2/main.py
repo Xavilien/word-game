@@ -6,7 +6,7 @@ def get_scores(dictionary, player):
     scores = {}
     for word in dictionary:
         parity = len(word) % 2
-        scores[word] = parity & (player % 2)
+        scores[word] = parity ^ (player % 2)
     return scores
 
 
