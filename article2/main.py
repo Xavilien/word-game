@@ -14,9 +14,9 @@ def get_possible(dictionary, curr_word):
     possible_words = search_remaining_letters(dictionary, curr_word)
     if len(possible_words) == 0 or possible_words[0] == "":
         return [], [""]
-    possible_letters = list(set([i[0] for i in possible_words]))
+    possible_letters = sorted(list(set([i[0] for i in possible_words])))
 
-    return sorted(list(set(possible_letters))), possible_words
+    return possible_letters, possible_words
 
 
 def value(dictionary, scores, curr_word, player, players_turn):
