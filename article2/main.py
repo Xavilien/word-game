@@ -79,6 +79,10 @@ def main():
 
     while True:
         curr_word = input("Starting letters: ")
+        if curr_word not in dictionary:
+            print("No word can be formed\n")
+            continue
+
         player = (len(curr_word)+1) % 2
         scores = get_scores(dictionary, player)
         get_next_letter(dictionary, scores, player, curr_word)
