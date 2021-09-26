@@ -11,18 +11,18 @@ def value(curr_word, player, players_turn):
     # Get next possible letters
     next_possible_letters, possible_words = get_possible(curr_word)
 
-    if players_turn:
+    if players_turn:  # Max if it is player's turn
         v = -float("inf")
         for letter in next_possible_letters:
             v = max(v, value(curr_word+letter, player, 0))
-    else:
+    else:  # Min if it is opponent's turn
         v = float("inf")
         for letter in next_possible_letters:
             v = min(v, value(curr_word+letter, player, 1))
     return v
 
 
-def get_next_letter(player, curr_word):
+def get_next_letter(curr_word, player):
     possible_letters, possible_words = get_possible(curr_word)
 
     if not possible_letters:
@@ -53,7 +53,7 @@ def main():
     while True:
         curr_word = input("Starting letters: ")
         player = (len(curr_word)+1) % 2
-        get_next_letter(player, curr_word)
+        get_next_letter(curr_word, player)
 
 
 if __name__ == '__main__':
