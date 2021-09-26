@@ -15,8 +15,8 @@ def get_dictionary(corpus=words.words()):
 
 dictionary = get_dictionary()
 
-print(len(dictionary))
+# print(len(dictionary))
 # >>> 210147
 
-print(dictionary[:10])
+# print(dictionary[:10])
 # >>> ['aalii', 'aardvark', 'aardwolf', 'abac', 'abaca', 'abacate', 'abacay', 'abacinate', 'abacination', 'abaciscus']
