@@ -53,3 +53,6 @@ def main(curr_word):
 if __name__ == '__main__':
     while True:
         main(input("Starting letters: "))
+
+# >>> Starting letters:
+# >>> Best letters to pick are: a, e, h, l
