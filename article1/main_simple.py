@@ -15,12 +15,12 @@ def value(curr_word, player, players_turn):
         v = float("inf")
         for letter in next_possible_letters:
             v = min(v, value(curr_word+letter, player, 1))
+
     return v
 
 
 @timing
-def main():
-    curr_word = input("Starting letters: ")
+def main(curr_word):
     if not search(curr_word):  # Ensure that the letters typed in can be used to form a word
         print("No word can be formed\n")
         return
@@ -52,4 +52,4 @@ def main():
 
 if __name__ == '__main__':
     while True:
-        main()
+        main(input("Starting letters: "))

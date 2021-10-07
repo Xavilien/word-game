@@ -38,14 +38,12 @@ def value(dictionary, scores, curr_word, player, players_turn):
             v = min(v, value(dictionary, scores, curr_word+letter, player, 1))
             if v == 0:
                 return v
+
     return v
 
 
 @timing
-def main():
-    dictionary = get_dictionary()
-
-    curr_word = input("Starting letters: ")
+def main(curr_word):
     if not search(dictionary, curr_word):  # Ensure that the letters typed in can be used to form a word
         print("No word can be formed\n")
         return
@@ -77,5 +75,6 @@ def main():
 
 
 if __name__ == '__main__':
+    dictionary = get_dictionary()
     while True:
-        main()
+        main(input("Starting letters: "))
