@@ -6,11 +6,11 @@ from time import time
 # Decorator to determine how long a function takes to run
 def timing(f):
     @wraps(f)
-    def wrap(*args, **kw):
-        ts = time()
-        result = f(*args, **kw)
-        te = time()
-        print(f'{f.__name__} took {(te-ts):.3f}s to run\n')
+    def wrap(*args, **kwargs):
+        start = time()
+        result = f(*args, **kwargs)
+        end = time()
+        print(f'{f.__name__} took {(end-start):.3f}s to run\n')
         return result
     return wrap
 
