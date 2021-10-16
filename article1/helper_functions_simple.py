@@ -42,18 +42,17 @@ def get_score(player, word):
     return score
 
 
-# print(search("epidemi"))
-# >>> ['epidemic', 'epidemical', 'epidemically', 'epidemicalness', 'epidemicity', 'epidemiographist', 'epidemiography',
-# 'epidemiological', 'epidemiologist', 'epidemiology']
+# print(search("mediu"))
+# >>> ['medium', 'mediumism', 'mediumistic', 'mediumization', 'mediumize', 'mediumship', 'medius']
 
-# print(search_remaining_letters("epidemi"))
-# >>> ['c', 'cal', 'cally', 'calness', 'city', 'ographist', 'ography', 'ological', 'ologist', 'ology']
+# print(search_remaining_letters("mediu"))
+# >>> ['m', 'mism', 'mistic', 'mization', 'mize', 'mship', 's']
 
-# print(get_possible("epidemi"))
-# >>> (['c', 'o'], ['c', 'cal', 'cally', 'calness', 'city', 'ographist', 'ography', 'ological', 'ologist', 'ology'])
+# print(get_possible("mediu"))
+# >>> (['m', 's'], ['m', 'mism', 'mistic', 'mization', 'mize', 'mship', 's'])
 
-# print(get_score(1, "epidemic"))
+# print(get_score(1, "medium"))
 # >>> 1
 
-# print(get_score(2, "epidemic"))
+# print(get_score(2, "medium"))
 # >>> 0
