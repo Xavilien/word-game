@@ -17,7 +17,7 @@ def timing(f):
 
 # Returns all words that start with the particular subword
 def search(subword):
-    return list(filter(lambda x: x.startswith(subword), dictionary))
+    return sorted(list(filter(lambda x: x.startswith(subword), dictionary)))
 
 
 # Returns all words, minus the subword, that starts with the particular subword
