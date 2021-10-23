@@ -37,3 +37,10 @@ def get_dictionary(dictionary=words.words()):
 
         with open("dictionary.txt", "w") as d:
             json.dump(dictionary, d)
+
+        return dictionary
+
+
+dictionary = get_dictionary()
+print(len(dictionary))
+# >>> 83111
