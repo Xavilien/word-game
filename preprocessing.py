@@ -5,7 +5,7 @@ from helper_functions import *
 
 
 # Recursively remove words that contain another word as prefix
-def remove_prefix(dictionary, prefix):
+def remove_unnecessary_words(dictionary, prefix):
     if len(dictionary) == 0:
         return []
     if dictionary[0] == "":
@@ -13,7 +13,7 @@ def remove_prefix(dictionary, prefix):
 
     new_dictionary = []
     for i in string.ascii_lowercase:
-        new_dictionary += remove_prefix(search_remaining_letters(dictionary, i), prefix+i)
+        new_dictionary += remove_unnecessary_words(search_remaining_letters(dictionary, i), prefix+i)
     return new_dictionary
 
 
@@ -33,7 +33,7 @@ def get_dictionary(dictionary=words.words()):
         dictionary = list(filter(lambda x: x[0] not in string.ascii_uppercase, dictionary))
 
         # Remove words that contain another word as a prefix
-        dictionary = remove_prefix(dictionary, "")
+        dictionary = remove_unnecessary_words(dictionary, "")
 
         with open("dictionary.txt", "w") as d:
             json.dump(dictionary, d)
