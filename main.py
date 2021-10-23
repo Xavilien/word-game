@@ -6,7 +6,7 @@ def value(curr_word, player, players_turn):
     next_possible_letters, possible_words = get_possible(dictionary, curr_word)
 
     # Check if gamestate is terminal, making use of the precalculated scores
-    if len(possible_words) == 1 or len(set(map(len, possible_words))) == 1:
+    if len(possible_words) == 1 or len(set(map(lambda x: len(x) % 2, possible_words))) == 1:
         return get_score(player, curr_word + possible_words[0])
 
     if players_turn:
