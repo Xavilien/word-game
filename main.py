@@ -1,28 +1,11 @@
 from preprocessing import *
-
-
-# Return score of all words given the player, 0 if player has to play the last letter and 1 if otherwise
-def get_scores(player):
-    scores = {}
-    for word in dictionary:
-        parity = len(word) % 2
-        scores[word] = parity ^ (player % 2)
-    return scores
-
-
-def get_possible(curr_word):
-    possible_words = search_remaining_letters(dictionary, curr_word)
-    if len(possible_words) == 0 or possible_words[0] == "":
-        return [], [""]
-    possible_letters = sorted(list(set([i[0] for i in possible_words])))
-
-    return possible_letters, possible_words
+from helper_functions_simple import timing
 
 
 def value(scores, curr_word, player, players_turn):
-    # Check if gamestate is terminal
-    next_possible_letters, possible_words = get_possible(curr_word)
+    next_possible_letters, possible_words = get_possible(dictionary, curr_word)
 
+    # Check if gamestate is terminal
     if len(possible_words) == 1 or len(set([scores[curr_word + word] for word in possible_words])) == 1:
         return scores[curr_word + possible_words[0]]
 
@@ -49,9 +32,9 @@ def main(curr_word):
         return
 
     player = (len(curr_word)+1) % 2  # Assume that the player who plays the next letter wants to win
-    scores = get_scores(player)
+    scores = get_scores(dictionary, player)
 
-    possible_letters, possible_words = get_possible(curr_word)
+    possible_letters, possible_words = get_possible(dictionary, curr_word)
 
     if not possible_letters:  # If curr_word is already an actual word
         print(curr_word, "is already a word!\n")
@@ -63,7 +46,7 @@ def main(curr_word):
         print("You win!") if scores[word] == 1 else print("You lose:(")
         return
 
-    scores = [value(dictionary, scores, curr_word + letter, player, 0) for letter in possible_letters]
+    scores = [value(scores, curr_word + letter, player, 0) for letter in possible_letters]
     best_letters = [possible_letters[i] for i in range(len(scores)) if scores[i] == 1]
 
     if not best_letters:  # If there is no possible way to win, just show all possible letters

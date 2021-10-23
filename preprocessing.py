@@ -1,18 +1,7 @@
 from nltk.corpus import words
 import string
 import json
-from functools import wraps
-from time import time
-
-
-# Returns all words that start with the particular subword
-def search(dictionary, subword):
-    return list(filter(lambda x: x.startswith(subword), dictionary))
-
-
-# Returns all words, minus the subword, that starts with the particular subword
-def search_remaining_letters(dictionary, subword):
-    return list(map(lambda x: x[len(subword):], search(dictionary, subword)))
+from helper_functions import *
 
 
 # Recursively remove words that contain another word as prefix
