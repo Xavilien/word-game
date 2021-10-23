@@ -1,3 +1,19 @@
+from functools import wraps
+from time import time
+
+
+# Decorator to determine how long a function takes to run
+def timing(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        start = time()
+        result = f(*args, **kwargs)
+        end = time()
+        print(f'{f.__name__} took {(end-start):.3f}s to run\n')
+        return result
+    return wrap
+
+
 # Returns all words that start with the particular subword
 def search(dictionary, subword):
     return list(filter(lambda x: x.startswith(subword), dictionary))
