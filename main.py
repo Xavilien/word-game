@@ -2,7 +2,7 @@ from preprocessing import *
 
 
 # Return score of all words given the player, 0 if player has to play the last letter and 1 if otherwise
-def get_scores(dictionary, player):
+def get_scores(player):
     scores = {}
     for word in dictionary:
         parity = len(word) % 2
@@ -10,7 +10,7 @@ def get_scores(dictionary, player):
     return scores
 
 
-def get_possible(dictionary, curr_word):
+def get_possible(curr_word):
     possible_words = search_remaining_letters(dictionary, curr_word)
     if len(possible_words) == 0 or possible_words[0] == "":
         return [], [""]
@@ -19,9 +19,9 @@ def get_possible(dictionary, curr_word):
     return possible_letters, possible_words
 
 
-def value(dictionary, scores, curr_word, player, players_turn):
+def value(scores, curr_word, player, players_turn):
     # Check if gamestate is terminal
-    next_possible_letters, possible_words = get_possible(dictionary, curr_word)
+    next_possible_letters, possible_words = get_possible(curr_word)
 
     if len(possible_words) == 1 or len(set([scores[curr_word + word] for word in possible_words])) == 1:
         return scores[curr_word + possible_words[0]]
@@ -29,13 +29,13 @@ def value(dictionary, scores, curr_word, player, players_turn):
     if players_turn:
         v = -float("inf")
         for letter in next_possible_letters:
-            v = max(v, value(dictionary, scores, curr_word+letter, player, 0))
+            v = max(v, value(scores, curr_word+letter, player, 0))
             if v == 1:
                 return v
     else:
         v = float("inf")
         for letter in next_possible_letters:
-            v = min(v, value(dictionary, scores, curr_word+letter, player, 1))
+            v = min(v, value(scores, curr_word+letter, player, 1))
             if v == 0:
                 return v
 
@@ -49,9 +49,9 @@ def main(curr_word):
         return
 
     player = (len(curr_word)+1) % 2  # Assume that the player who plays the next letter wants to win
-    scores = get_scores(dictionary, player)
+    scores = get_scores(player)
 
-    possible_letters, possible_words = get_possible(dictionary, curr_word)
+    possible_letters, possible_words = get_possible(curr_word)
 
     if not possible_letters:  # If curr_word is already an actual word
         print(curr_word, "is already a word!\n")
