@@ -18,10 +18,8 @@ def get_possible(dictionary, curr_word):
     return possible_letters, possible_words
 
 
-# Return score of all words given the player, 0 if player has to play the last letter and 1 if otherwise
-def get_scores(dictionary, player):
-    scores = {}
-    for word in dictionary:
-        parity = len(word) % 2
-        scores[word] = parity ^ (player % 2)
-    return scores
+# Returns whether the player wins if the word is formed
+def get_score(player, word):
+    parity = len(word) % 2
+    score = parity ^ (player % 2)
+    return score

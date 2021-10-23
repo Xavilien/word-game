@@ -2,24 +2,24 @@ from preprocessing import *
 from helper_functions_simple import timing
 
 
-def value(scores, curr_word, player, players_turn):
+def value(curr_word, player, players_turn):
     next_possible_letters, possible_words = get_possible(dictionary, curr_word)
 
-    # Check if gamestate is terminal
-    if len(possible_words) == 1 or len(set([scores[curr_word + word] for word in possible_words])) == 1:
-        return scores[curr_word + possible_words[0]]
+    # Check if gamestate is terminal, making use of the precalculated scores
+    if len(possible_words) == 1 or len(set(map(len, possible_words))) == 1:
+        return get_score(player, curr_word + possible_words[0])
 
     if players_turn:
         v = -float("inf")
         for letter in next_possible_letters:
-            v = max(v, value(scores, curr_word+letter, player, 0))
-            if v == 1:
+            v = max(v, value(curr_word+letter, player, 0))
+            if v == 1:  # Alpha-beta pruning
                 return v
     else:
         v = float("inf")
         for letter in next_possible_letters:
-            v = min(v, value(scores, curr_word+letter, player, 1))
-            if v == 0:
+            v = min(v, value(curr_word+letter, player, 1))
+            if v == 0:  # Alpha-beta pruning
                 return v
 
     return v
@@ -32,7 +32,6 @@ def main(curr_word):
         return
 
     player = (len(curr_word)+1) % 2  # Assume that the player who plays the next letter wants to win
-    scores = get_scores(dictionary, player)
 
     possible_letters, possible_words = get_possible(dictionary, curr_word)
 
@@ -42,19 +41,19 @@ def main(curr_word):
 
     if len(possible_words) == 1:  # If only one possible word can be formed with curr_word
         word = curr_word + possible_words[0]
-        print("The only possible word is", word, '\n')
-        print("You win!") if scores[word] == 1 else print("You lose:(")
+        print("The only possible word is", word)
+        print("You win!\n") if get_score(player, word) == 1 else print("You lose:(\n")
         return
 
-    scores = [value(scores, curr_word + letter, player, 0) for letter in possible_letters]
+    scores = [value(curr_word + letter, player, 0) for letter in possible_letters]
     best_letters = [possible_letters[i] for i in range(len(scores)) if scores[i] == 1]
 
     if not best_letters:  # If there is no possible way to win, just show all possible letters
         print("There are no winning letters")
-        print("Possible letters: ", ", ".join(possible_letters))
+        print("Possible letters: ", ", ".join(possible_letters), "\n")
         return
 
-    print("Best letters to pick are:", ", ".join(best_letters))
+    print("Best letters to pick are:", ", ".join(best_letters), "\n")
 
 
 if __name__ == '__main__':
