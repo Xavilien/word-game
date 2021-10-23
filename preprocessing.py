@@ -5,29 +5,6 @@ from functools import wraps
 from time import time
 
 
-# Decorator to determine how long a function takes to run
-def timing(f):
-    @wraps(f)
-    def wrap(*args, **kw):
-        ts = time()
-        result = f(*args, **kw)
-        te = time()
-        print(f'{f.__name__} took {(te-ts):.3f}s to run\n')
-        return result
-    return wrap
-
-
-def save_dictionary(dictionary):
-    with open("article2/dictionary.txt", "w") as d:
-        json.dump(dictionary, d)
-
-
-def load_dictionary():
-    with open("article2/dictionary.txt", "r") as d:
-        dictionary = json.load(d)
-    return dictionary
-
-
 # Returns all words that start with the particular subword
 def search(dictionary, subword):
     return list(filter(lambda x: x.startswith(subword), dictionary))
@@ -61,7 +38,8 @@ def preprocess(dictionary):
     # Remove words that contain another word as a prefix
     dictionary = remove_prefix(dictionary, "")
 
-    save_dictionary(dictionary)
+    with open("article2/dictionary.txt", "w") as d:
+        json.dump(dictionary, d)
 
     return dictionary
 
@@ -70,6 +48,8 @@ def preprocess(dictionary):
 # Load dictionary file if it exists else create a new one
 def get_dictionary(dictionary=words.words()):
     try:
-        return load_dictionary()
+        with open("article2/dictionary.txt", "r") as d:
+            dictionary = json.load(d)
+        return dictionary
     except FileNotFoundError:
         return preprocess(dictionary)
