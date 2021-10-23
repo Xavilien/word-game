@@ -17,28 +17,23 @@ def remove_prefix(dictionary, prefix):
     return new_dictionary
 
 
-def preprocess(dictionary):
-    # Remove words greater than 4 letters
-    dictionary = list(filter(lambda x: len(x) >= 4, dictionary))
-
-    # Remove words starting with capital letters because they are likely to be names
-    dictionary = list(filter(lambda x: x[0] not in string.ascii_uppercase, dictionary))
-
-    # Remove words that contain another word as a prefix
-    dictionary = remove_prefix(dictionary, "")
-
-    with open("article2/dictionary.txt", "w") as d:
-        json.dump(dictionary, d)
-
-    return dictionary
-
-
 # @timing
 # Load dictionary file if it exists else create a new one
 def get_dictionary(dictionary=words.words()):
     try:
-        with open("article2/dictionary.txt", "r") as d:
+        with open("dictionary.txt", "r") as d:
             dictionary = json.load(d)
         return dictionary
+
     except FileNotFoundError:
-        return preprocess(dictionary)
+        # Remove words greater than 4 letters
+        dictionary = list(filter(lambda x: len(x) >= 4, dictionary))
+
+        # Remove words starting with capital letters because they are likely to be names
+        dictionary = list(filter(lambda x: x[0] not in string.ascii_uppercase, dictionary))
+
+        # Remove words that contain another word as a prefix
+        dictionary = remove_prefix(dictionary, "")
+
+        with open("dictionary.txt", "w") as d:
+            json.dump(dictionary, d)
