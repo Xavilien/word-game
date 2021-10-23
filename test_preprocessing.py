@@ -1,5 +1,5 @@
 from unittest import TestCase
-from article2.preprocessing import *
+from preprocessing import *
 
 
 class Test(TestCase):
