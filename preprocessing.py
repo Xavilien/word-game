@@ -42,5 +42,5 @@ def get_dictionary(dictionary=words.words()):
 
 
 dictionary = get_dictionary()
-print(len(dictionary))
+# print(len(dictionary))
 # >>> 83111
