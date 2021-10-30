@@ -5,7 +5,7 @@ from preprocessing import dictionary
 def value(prefix, player, players_turn):
     possible_words, possible_letters = search(dictionary, prefix)
 
-    # Check if gamestate is terminal, making use of the parity of the remaining words
+    # Check if game state is terminal, making use of the parity of the remaining words
     if len(possible_letters) == 0 or len(set(map(lambda x: len(x) % 2, possible_words))) == 1:
         return get_score(player, possible_words[0])
 
