@@ -26,8 +26,8 @@ def search_remaining_letters(subword):
 
 
 # Returns list of next possible letters along with possible words
-def get_possible(curr_word):
-    possible_words = search_remaining_letters(curr_word)
+def get_possible(prefix):
+    possible_words = search_remaining_letters(prefix)
     if len(possible_words) == 0 or possible_words[0] == "":
         return [], [""]
     possible_letters = sorted(list(set([i[0] for i in possible_words])))
