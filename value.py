@@ -13,13 +13,13 @@ def value(prefix, player, players_turn):
         v = -float("inf")
         for letter in possible_letters:
             v = max(v, value(prefix+letter, player, 0))
-            if v == 1:  # Alpha-beta pruning
+            if v == 1:  # Alpha-beta pruning!
                 return v
     else:
         v = float("inf")
         for letter in possible_letters:
             v = min(v, value(prefix+letter, player, 1))
-            if v == 0:  # Alpha-beta pruning
+            if v == 0:  # Alpha-beta pruning!
                 return v
 
     return v
