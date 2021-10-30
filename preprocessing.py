@@ -45,5 +45,6 @@ def get_dictionary(corpus=words.words()):
 
 
 dictionary = get_dictionary()
+
 # print(len(dictionary))
 # >>> 83111
