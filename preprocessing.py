@@ -13,11 +13,13 @@ def remove_unnecessary_words(corpus, prefix):
         return [prefix]
 
     new_dictionary = []
+
     for i in string.ascii_lowercase:
         possible_words = list(filter(lambda x: x.startswith(i), corpus))  # Find words that start with the next letter
         remaining_letters = list(map(lambda x: x[1:], possible_words))  # Get remaining letters for the possible words
 
         new_dictionary += remove_unnecessary_words(remaining_letters, prefix + i)
+
     return new_dictionary
 
 
