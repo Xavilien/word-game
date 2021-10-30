@@ -13,7 +13,7 @@ def remove_unnecessary_words(corpus, prefix):
 
     new_dictionary = []
     for i in string.ascii_lowercase:
-        possible_words = filter(lambda x: x.startswith(prefix), dictionary)
+        possible_words = filter(lambda x: x.startswith(prefix), corpus)
         possible_letters = list(map(lambda x: x[len(prefix):], possible_words))
         new_dictionary += remove_unnecessary_words(possible_letters, prefix + i)
     return new_dictionary
