@@ -6,15 +6,17 @@ import json
 
 # Recursively remove words that contain another word as prefix
 def remove_unnecessary_words(corpus, prefix):
-    if len(corpus) == 0:
+    # Base cases
+    if len(corpus) == 0:  # If there are no words that start with the prefix
         return []
-    if corpus[0] == "":
+    if corpus[0] == "":  # If the prefix is a word
         return [prefix]
 
     new_dictionary = []
     for i in string.ascii_lowercase:
-        possible_words = list(filter(lambda x: x.startswith(i), corpus))
-        remaining_letters = list(map(lambda x: x[1:], possible_words))
+        possible_words = list(filter(lambda x: x.startswith(i), corpus))  # Find words that start with the next letter
+        remaining_letters = list(map(lambda x: x[1:], possible_words))  # Get remaining letters for the possible words
+
         new_dictionary += remove_unnecessary_words(remaining_letters, prefix + i)
     return new_dictionary
 
