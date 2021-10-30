@@ -23,5 +23,8 @@ dictionary = get_dictionary()
 # print(len(dictionary))
 # >>> 209410
 
-# print(dictionary.keys()[:10])
+# print(dictionary.keys()[:10])  # Display the first 10 words in the dictionary
 # >>> ['aalii', 'aardvark', 'aardwolf', 'abac', 'abaca', 'abacate', 'abacay', 'abacinate', 'abacination', 'abaciscus']
+
+# print(dictionary.keys("mediu"))  # Search the dictionary for words that start with the prefix "mediu"
+# >>> ['medium', 'mediumism', 'mediumistic', 'mediumization', 'mediumize', 'mediumship', 'medius']
