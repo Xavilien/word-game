@@ -17,7 +17,7 @@ def timing(f):
 # Returns list of words that start with a particular prefix as well as the next possible letters
 def search(dictionary, prefix):
     try:
-        possible_words = dictionary.keys(prefix, shallow=False)
+        possible_words = dictionary.keys(prefix, shallow=True)
     except KeyError:  # No word starting with the prefix exists
         return [], []
 
