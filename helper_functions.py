@@ -1,6 +1,5 @@
 from functools import wraps
 from time import time
-from preprocessing import *
 
 
 # Decorator to determine how long a function takes to run
@@ -16,7 +15,7 @@ def timing(f):
 
 
 # Returns list of words that start with a particular prefix as well as the next possible letters
-def search(prefix):
+def search(dictionary, prefix):
     try:
         possible_words = dictionary.keys(prefix, shallow=False)
     except KeyError:  # No word starting with the prefix exists

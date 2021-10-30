@@ -1,44 +1,48 @@
 from nltk.corpus import words
 import string
+from pygtrie import CharTrie
 import json
-from helper_functions import *
 
 
 # Recursively remove words that contain another word as prefix
-def remove_unnecessary_words(dictionary, prefix):
-    if len(dictionary) == 0:
+def remove_unnecessary_words(corpus, prefix):
+    if len(corpus) == 0:
         return []
-    if dictionary[0] == "":
+    if corpus[0] == "":
         return [prefix]
 
     new_dictionary = []
     for i in string.ascii_lowercase:
-        new_dictionary += remove_unnecessary_words(search_remaining_letters(dictionary, i), prefix+i)
+        possible_words = filter(lambda x: x.startswith(prefix), dictionary)
+        possible_letters = list(map(lambda x: x[len(prefix):], possible_words))
+        new_dictionary += remove_unnecessary_words(possible_letters, prefix + i)
     return new_dictionary
 
 
 # @timing
 # Load dictionary file if it exists else create a new one
-def get_dictionary(dictionary=words.words()):
+def get_dictionary(corpus=words.words()):
     try:
         with open("dictionary.txt", "r") as d:
-            dictionary = json.load(d)
-        return dictionary
+            corpus = json.load(d)
 
     except FileNotFoundError:
         # Remove words greater than 4 letters
-        dictionary = list(filter(lambda x: len(x) >= 4, dictionary))
+        corpus = list(filter(lambda x: len(x) >= 4, corpus))
 
         # Remove words starting with capital letters because they are likely to be names
-        dictionary = list(filter(lambda x: x[0] not in string.ascii_uppercase, dictionary))
+        corpus = list(filter(lambda x: x[0] not in string.ascii_uppercase, corpus))
 
         # Remove words that contain another word as a prefix
-        dictionary = remove_unnecessary_words(dictionary, "")
+        corpus = remove_unnecessary_words(corpus, "")
 
         with open("dictionary.txt", "w") as d:
-            json.dump(dictionary, d)
+            json.dump(corpus, d)
 
-        return dictionary
+    output = CharTrie()
+    for word in corpus:
+        output[word] = True
+    return output
 
 
 dictionary = get_dictionary()

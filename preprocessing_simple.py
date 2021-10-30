@@ -1,5 +1,6 @@
 from nltk.corpus import words
 import string
+from pygtrie import CharTrie
 
 
 # Returns list of words from the nltk corpus
@@ -10,13 +11,17 @@ def get_dictionary(corpus=words.words()):
     # Remove words starting with capital letters because they are likely to be names
     corpus = list(filter(lambda x: x[0] not in string.ascii_uppercase, corpus))
 
-    return corpus
+    output = CharTrie()
+    for word in corpus:
+        output[word] = True
+
+    return output
 
 
 dictionary = get_dictionary()
 
 # print(len(dictionary))
-# >>> 210147
+# >>> 209410
 
-# print(dictionary[:10])
+# print(dictionary.keys()[:10])
 # >>> ['aalii', 'aardvark', 'aardwolf', 'abac', 'abaca', 'abacate', 'abacay', 'abacinate', 'abacination', 'abaciscus']

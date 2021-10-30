@@ -1,46 +1,23 @@
-from preprocessing import *
-from helper_functions_simple import timing
-
-
-def value(prefix, player, players_turn):
-    next_possible_letters, possible_words = get_possible(dictionary, prefix)
-
-    # Check if gamestate is terminal, making use of the parity of the remaining words
-    if len(possible_words) == 1 or len(set(map(lambda x: len(x) % 2, possible_words))) == 1:
-        return get_score(player, prefix + possible_words[0])
-
-    if players_turn:
-        v = -float("inf")
-        for letter in next_possible_letters:
-            v = max(v, value(prefix+letter, player, 0))
-            if v == 1:  # Alpha-beta pruning
-                return v
-    else:
-        v = float("inf")
-        for letter in next_possible_letters:
-            v = min(v, value(prefix+letter, player, 1))
-            if v == 0:  # Alpha-beta pruning
-                return v
-
-    return v
+from value import *
+# from value_simple import *
 
 
 @timing
 def main(prefix):
-    if not search(dictionary, prefix):  # Ensure that the letters typed in can be used to form a word
-        print("No word can be formed\n")
+    possible_words, possible_letters = search(dictionary, prefix)
+
+    if len(possible_words) == 0:   # Ensure that the letters typed in can be used to form a word
+        print("No word can be formed!\n")
+        return
+
+    if len(possible_letters) == 0:  # If prefix is already an actual word
+        print(prefix, "is already a word!\n")
         return
 
     player = (len(prefix)+1) % 2  # Assume that the player who plays the next letter wants to win
 
-    possible_letters, possible_words = get_possible(dictionary, prefix)
-
-    if not possible_letters:  # If prefix is already an actual word
-        print(prefix, "is already a word!\n")
-        return
-
     if len(possible_words) == 1:  # If only one possible word can be formed with prefix
-        word = prefix + possible_words[0]
+        word = possible_words[0]
         print("The only possible word is", word)
         print("You win!\n") if get_score(player, word) == 1 else print("You lose:(\n")
         return
@@ -57,6 +34,8 @@ def main(prefix):
 
 
 if __name__ == '__main__':
-    dictionary = get_dictionary()
     while True:
         main(input("Starting letters: "))
+
+# >>> Starting letters:
+# >>> Best letters to pick are: a, e, h, l
