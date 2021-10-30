@@ -1,6 +1,5 @@
 from helper_functions_simple import *
 import trie
-import trie2
 
 
 def value(curr_word, player, players_turn):
