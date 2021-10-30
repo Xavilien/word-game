@@ -13,9 +13,9 @@ def remove_unnecessary_words(corpus, prefix):
 
     new_dictionary = []
     for i in string.ascii_lowercase:
-        possible_words = filter(lambda x: x.startswith(prefix), corpus)
-        possible_letters = list(map(lambda x: x[len(prefix):], possible_words))
-        new_dictionary += remove_unnecessary_words(possible_letters, prefix + i)
+        possible_words = list(filter(lambda x: x.startswith(i), corpus))
+        remaining_letters = list(map(lambda x: x[1:], possible_words))
+        new_dictionary += remove_unnecessary_words(remaining_letters, prefix + i)
     return new_dictionary
 
 
@@ -46,5 +46,5 @@ def get_dictionary(corpus=words.words()):
 
 dictionary = get_dictionary()
 
-# print(len(dictionary))
+print(len(dictionary))
 # >>> 83111
