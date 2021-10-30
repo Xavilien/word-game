@@ -1,5 +1,6 @@
 from functools import wraps
 from time import time
+from preprocessing_simple import dictionary
 
 
 # Decorator to determine how long a function takes to run
@@ -17,7 +18,7 @@ def timing(f):
 # Returns list of words that start with a particular prefix as well as the next possible letters
 def search(dictionary, prefix):
     try:
-        possible_words = dictionary.keys(prefix, shallow=True)
+        possible_words = dictionary.keys(prefix)
     except KeyError:  # No word starting with the prefix exists
         return [], []
 
@@ -34,3 +35,13 @@ def get_score(player, word):
     parity = len(word) % 2
     score = parity ^ (player % 2)
     return score
+
+
+# print(search(dictionary, "mediu"))
+# >>> (['medium', 'mediumism', 'mediumistic', 'mediumization', 'mediumize', 'mediumship', 'medius'], ['m', 's'])
+
+# print(get_score(1, "medium"))
+# >>> 1
+
+# print(get_score(2, "medium"))
+# >>> 0
