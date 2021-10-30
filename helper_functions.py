@@ -1,5 +1,6 @@
 from functools import wraps
 from time import time
+from preprocessing import *
 
 
 # Decorator to determine how long a function takes to run
@@ -14,24 +15,19 @@ def timing(f):
     return wrap
 
 
-# Returns all words that start with the particular prefix
-def search(dictionary, prefix):
-    return list(filter(lambda x: x.startswith(prefix), dictionary))
+# Returns list of words that start with a particular prefix as well as the next possible letters
+def search(prefix):
+    try:
+        possible_words = dictionary.keys(prefix, shallow=False)
+    except KeyError:  # No word starting with the prefix exists
+        return [], []
 
+    try:
+        possible_letters = sorted(list(set([word[len(prefix)] for word in possible_words])))
+    except IndexError:  # Prefix is already a word
+        return possible_words, []
 
-# Returns all words, minus the prefix, that starts with the particular prefix
-def search_remaining_letters(dictionary, prefix):
-    return list(map(lambda x: x[len(prefix):], search(dictionary, prefix)))
-
-
-# Returns list of next possible letters along with possible words
-def get_possible(dictionary, prefix):
-    possible_words = search_remaining_letters(dictionary, prefix)
-    if len(possible_words) == 0 or possible_words[0] == "":
-        return [], [""]
-    possible_letters = sorted(list(set([i[0] for i in possible_words])))
-
-    return possible_letters, possible_words
+    return possible_words, possible_letters
 
 
 # Returns whether the player wins if the word is formed
