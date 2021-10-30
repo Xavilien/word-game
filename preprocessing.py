@@ -19,7 +19,6 @@ def remove_unnecessary_words(corpus, prefix):
     return new_dictionary
 
 
-# @timing
 # Load dictionary file if it exists else create a new one
 def get_dictionary(corpus=words.words()):
     try:
